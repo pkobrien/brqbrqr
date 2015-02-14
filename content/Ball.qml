@@ -1,30 +1,39 @@
 import QtQuick 2.4
-import "../content" as Brq
+import Box2D 2.0 as B2
+import "../gameframe" as GF
 
-Item {
+GF.DynamicBodyItem {
     id: ball
 
-    property real duration: 2
-    property real xIncrement: 4
-    property real yIncrement: 4
+    property real radius: 10
 
-    width: 16
-    height: width
+    objectName: "ball"
+    sleepingAllowed: false
 
-    Behavior on x { PropertyAnimation{ duration: ball.duration } }
-    Behavior on y { PropertyAnimation{ duration: ball.duration } }
+    fixtures: B2.Circle {
+        id: circle
+        radius: ball.radius
+        x: -radius
+        y: -radius
+        density: 1
+        friction: 0.01
+        restitution: 1
+    }
 
     Rectangle {
         id: visual
-        anchors.fill: ball
-        border { color: "Gray"; width: 1 }
-        color: "Black"
+        width: ball.radius * 2
+        height: width
+        anchors.centerIn: ball
+        border.color: "Yellow"
+        border.width: 1
+        color: "White"
+        radius: width / 2
+        smooth: true
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "Red" }
-            GradientStop { position: 0.3; color: "Yellow" }
+            GradientStop { position: 0.0; color: "Yellow" }
+//            GradientStop { position: 0.4; color: "Yellow" }
             GradientStop { position: 1.0; color: "Black" }
         }
-        rotation: -30
-        radius: width / 2
     }
 }
