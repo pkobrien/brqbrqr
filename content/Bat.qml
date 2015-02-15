@@ -2,15 +2,21 @@ import QtQuick 2.4
 import Box2D 2.0 as B2
 import "../gameframe" as GF
 
-GF.StaticBodyItem {
+GF.KinematicBody {
     id: bat
 
     property real _minX: 0
     property real _maxX: parent.width - bat.width
+    property real _prevY: 0
+
+    function bump() {
+        _prevY = bat.y
+        bat.linearVelocity = Qt.point(0, -2);
+    }
 
     function hit(ball, impulse) {
-        var location = ball.body.getWorldCenter();
-        ball.body.applyLinearImpulse(impulse, location);
+        var location = ball.worldCenter;  //ball.getWorldCenter();
+        ball.applyLinearImpulse(impulse, location);
     }
 
     function position(newX) {
@@ -25,10 +31,20 @@ GF.StaticBodyItem {
     width: 80
     height: 20
 
+    onYChanged: {
+        if (y < _prevY - height / 2) {
+            linearVelocity = Qt.point(0, 0);
+            y = _prevY;
+        }
+    }
+
     fixtures: [
         B2.Circle {
             id: leftCircle
             radius: bat.height / 2
+            x: 0
+            friction: 0.8
+            restitution: 1
             onBeginContact: {
                 if (other.getBody().target.objectName === "ball") {
                     visualLeftCircle.border.width += 3;
@@ -71,6 +87,8 @@ GF.StaticBodyItem {
             id: rightCircle
             radius: bat.height / 2
             x: leftCircle.radius + box.width - rightCircle.radius
+            friction: 0.8
+            restitution: 1
             onBeginContact: {
                 if (other.getBody().target.objectName === "ball") {
                     visualRightCircle.border.width += 3;

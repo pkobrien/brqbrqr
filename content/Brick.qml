@@ -2,7 +2,7 @@ import QtQuick 2.4
 import Box2D 2.0 as B2
 import "../gameframe" as GF
 
-GF.StaticBodyItem {
+GF.StaticBody {
     id: brick
 
     property bool broken: strength <= 0 ? true : false
@@ -10,6 +10,7 @@ GF.StaticBodyItem {
     property int points: 5
     property int strength: 5
 
+    objectName: "brick"
     width: 20
     height: 20
 
@@ -48,7 +49,7 @@ GF.StaticBodyItem {
     PropertyAnimation {
         target: brick
         property: "opacity"
-        duration: 3000
+        duration: 1000
         to: 0
         easing.type: Easing.OutInBounce
         running: brick.broken

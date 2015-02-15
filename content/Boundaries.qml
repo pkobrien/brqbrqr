@@ -1,6 +1,6 @@
 import "../gameframe" as GF
 
 GF.Boundaries {
-    friction: 0.01
+    friction: 0
     restitution: 1
 }

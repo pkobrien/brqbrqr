@@ -6,10 +6,13 @@ import "../levels" as Levels
 GF.Scene {
     id: scene
 
+    property int ballCount: 3
+
     function fail(ball) {
         ball.launched = false;
-        ball.linearVelocity = Qt.point(0, 0)
-        // TODO Update number of balls left to play.
+        ball.angularVelocity = 0;
+        ball.linearVelocity = Qt.point(0, 0);
+        scene.ballCount--;
         position(ball);
     }
 
@@ -20,7 +23,7 @@ GF.Scene {
         ball.launched = true;
         var impulse = Qt.point(0, 10);
         var location = ball.body.getWorldCenter();
-        ball.body.applyLinearImpulse(impulse, location);
+        ball.applyLinearImpulse(impulse, location);
     }
 
     function position(ball) {
@@ -39,7 +42,11 @@ GF.Scene {
     width: 600
     height: 500
 
-    status: qsTr("Ball Linear Velocity: %1  Rotation: %2  X: %3  Y: %4").arg(ball.linearVelocity).arg(ball.rotation).arg(ball.x).arg(ball.y)
+//    status: qsTr("Ball Linear Velocity: %1  X: %2  Y: %3  [Debug: %4]  [Paused: %5]").arg(
+//                 ball.linearVelocity).arg(ball.x).arg(ball.y).arg(debug).arg(!world.running)
+
+    status: qsTr("Balls: %1  Bricks: %2  [Debug: %4]  [Paused: %5]").arg(
+                 scene.ballCount).arg(level.brickCount).arg(debug).arg(!world.running)
 
     world.pixelsPerMeter: 20
     world.gravity: Qt.point(0, 0)
@@ -75,46 +82,35 @@ GF.Scene {
 //        console.log(entityA.objectName, entityB.objectName)
 //    }
 
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        color: debug ? "White" : "DarkSlateGray"
-    }
-
-    Rectangle {
-        id: base
-        height: 8
-        width: parent.width
-        anchors.bottom: parent.bottom
-        color: "Green"
-    }
-
     Brq.Ball {
         id: ball
         property bool launched: false
-        Component.onCompleted: position(ball);
+        Component.onCompleted: { scene.ballCount--; position(ball); }
     }
 
     Brq.Bat {
         id: bat
-        anchors.top: level.bottom
-        anchors.topMargin: 60
         x: scene.width / 2 - bat.width / 2
-//        onBeginContact: console.log(other, "hit the bat");
+        y: level.height + 60
     }
 
     Brq.Boundaries {
         id: boundaries
-        bottomBoundary.onBeginContact: { fail(ball); base.color = "Red"; }
-        bottomBoundary.onEndContact: base.color = "Yellow";
+        bottomBoundary.onBeginContact: fail(ball);
     }
 
-    Levels.LevelOne {
+    Levels.Level004 {
         id: level
+        background.parent: scene
+        background.width: scene.width
+        background.height: scene.height
+        background.visible: !debug
+        background.z: -1
+        Component.onCompleted: scene.ballCount += level.bonusBalls;
     }
 
     MouseArea {
-        anchors.fill: parent
+        anchors.fill: scene
         hoverEnabled: true
         onClicked: {
             scene.start()
@@ -132,6 +128,7 @@ GF.Scene {
 //        console.log(1.0/60.0, world.timeStep, world.positionIterations, world.velocityIterations)
     }
 
-    Keys.onEscapePressed: scene.world.running = !scene.world.running;
-    Keys.onSpacePressed: debug = !debug;
+    Keys.onEnterPressed: scene.world.running = !scene.world.running;
+    Keys.onEscapePressed: debug = !debug;
+    Keys.onSpacePressed: bat.bump();
 }

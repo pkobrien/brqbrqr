@@ -45,6 +45,6 @@ GF.Game {
         id: mainScene
     }
 
-    Keys.onEscapePressed: game.currentScene.world.running = !game.currentScene.world.running;
-    Keys.onSpacePressed: game.currentScene.debug = !game.currentScene.debug;
+//    Keys.onEnterPressed: game.currentScene.world.running = !game.currentScene.world.running;
+//    Keys.onEscapePressed: game.currentScene.debug = !game.currentScene.debug;
 }

@@ -14,13 +14,19 @@ Item {
     property alias fixtures: itemBody.fixtures
     property alias sleepingAllowed: itemBody.sleepingAllowed
 
-    //Simulation properties
+    function getWorldCenter() { itemBody.getWorldCenter() }
+
+    readonly property var worldCenter: function() { return itemBody.getWorldCenter(); }
+
+    //Simulation properties and functions
     property alias angularDamping: itemBody.angularDamping
     property alias angularVelocity: itemBody.angularVelocity
     property alias bullet: itemBody.bullet
     property alias gravityScale: itemBody.gravityScale
     property alias linearDamping: itemBody.linearDamping
     property alias linearVelocity: itemBody.linearVelocity
+
+    function applyLinearImpulse(impulse, point) { itemBody.applyLinearImpulse(impulse, point) }
 
     transformOrigin: Item.TopLeft
 

@@ -12,7 +12,7 @@ Item {
     property string version: "0.0.0"
 //    property int updatesPerSecond: 30
 
-    focus: true
+//    focus: true
 
     onDomainChanged: Qt.application.domain = game.domain;
     onNameChanged: Qt.application.name = game.name;
