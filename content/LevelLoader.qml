@@ -4,9 +4,11 @@ Loader {
     id: levelLoader
 
     property int index: 0
-    property var levels: ["Level001", "Level002", "Level003", "Level004", "Level005"]
-    property string path: "../levels/" + levels[index] + ".qml"
+    property var levels: ["EasyGreen", "EasyYellow", "EasyRed", "EasyBlue", "EasyMixed"]
+    property string levelName: levels[index]
     property var world: parent.world
+
+    property string _path: "../levels/" + levels[index] + ".qml"
 
     function next() {
         _load(index + 1);
@@ -26,7 +28,7 @@ Loader {
         world.running = false;
         level = Math.min(Math.max(level, 0), levels.length - 1);
         index = level % levels.length;
-        source = path;
+        source = _path;
     }
 
     width: 600
@@ -42,5 +44,5 @@ Loader {
         parent.ballCount += item.bonusBalls;
     }
 
-    Component.onCompleted: source = path;
+    Component.onCompleted: source = _path;
 }
