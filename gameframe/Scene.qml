@@ -5,7 +5,6 @@ import "." as GF
 Item {
     id: scene
 
-    property bool debug: false
     property string status
     property var world
 

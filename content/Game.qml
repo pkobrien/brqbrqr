@@ -6,13 +6,13 @@ import "../gameframe" as GF
 GF.Game {
     id: game
 
-    property int currentLevel: 0
+//    property int currentLevel: 0
 
-    function startNextLevel() {
-        game.currentLevel++;
-        mainScene.reset();
-        game.currentScene = mainScene;
-    }
+//    function startNextLevel() {
+//        game.currentLevel++;
+//        mainScene.reset();
+//        game.currentScene = mainScene;
+//    }
 
     width: 600
     height: 500
@@ -20,7 +20,8 @@ GF.Game {
     currentScene: mainScene
     name: "BrqBrqr"
     status: currentScene.status
-//    updatesPerSecond: 30
+
+    //    updatesPerSecond: 30
 
 //    Brq.GameIntroScene {
 //        id: gameIntroScene
@@ -44,7 +45,4 @@ GF.Game {
     Brq.MainScene {
         id: mainScene
     }
-
-//    Keys.onEnterPressed: game.currentScene.world.running = !game.currentScene.world.running;
-//    Keys.onEscapePressed: game.currentScene.debug = !game.currentScene.debug;
 }

@@ -4,7 +4,6 @@ import Box2D 2.0 as B2
 Item {
     id: item
 
-    property bool debug: parent.debug
     property var world: parent.world
 
     property alias body: itemBody

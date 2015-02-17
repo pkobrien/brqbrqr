@@ -55,7 +55,7 @@ GF.Scene {
     height: 500
 
     status: qsTr("Balls: %1  Bricks: %2  [Debug: %4]  [Paused: %5]  [Gravity: %6]  [Y Velocity: %7]").arg(
-                ballCount).arg(levelLoader.item.brickCount).arg(debug).arg(!world.running).arg(
+                ballCount).arg(levelLoader.item.brickCount).arg(world.debug).arg(!world.running).arg(
                 world.gravity).arg(activeBall.linearVelocity.y)
 
     world: Brq.MainWorld { gravity: scene.gravity }
@@ -92,7 +92,7 @@ GF.Scene {
     Component.onCompleted: start();
 
     Keys.onEnterPressed: world.running = !world.running;
-    Keys.onEscapePressed: debug = !debug;
+    Keys.onEscapePressed: world.debug = !world.debug;
     Keys.onRightPressed: levelLoader.next();
     Keys.onSpacePressed: bat.bump();
 }

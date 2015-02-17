@@ -5,7 +5,7 @@ B2.DebugDraw {
     id: debugDraw
 
     opacity: 0.75
-    visible: parent.debug
+    visible: parent.world.debug
     world: parent.world
     z: 99
 }
