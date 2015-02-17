@@ -2,47 +2,32 @@ import QtQuick 2.4
 import Box2D 2.0
 import "../content" as Brq
 import "../gameframe" as GF
+import "../scenes" as Scene
 
 GF.Game {
     id: game
 
-//    property int currentLevel: 0
-
-//    function startNextLevel() {
-//        game.currentLevel++;
-//        mainScene.reset();
-//        game.currentScene = mainScene;
-//    }
-
     width: 600
     height: 500
 
-    currentScene: mainScene
+    activeScene: mainScene
     name: "BrqBrqr"
-    status: currentScene.status
+    status: activeScene.status
 
     //    updatesPerSecond: 30
 
-//    Brq.GameIntroScene {
+//    Scene.GameIntro {
 //        id: gameIntroScene
 //        onNextScene: {
 //            game.currentScene = mainScene;
 //        }
 //    }
 
-//    Brq.GameOverScene {
+//    Scene.GameOver {
 //        id: gameOverScene
 //    }
 
-//    Brq.LevelCompletedScene {
-//        id: levelCompletedScene
-//        level: game.currentLevel
-//        onNextScene: {
-//            game.startNextLevel()
-//        }
-//    }
-
-    Brq.MainScene {
+    Scene.MainScene {
         id: mainScene
     }
 }

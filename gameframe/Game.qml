@@ -4,7 +4,7 @@ import Box2D 2.0 as B2
 Item {
     id: game
 
-    property Scene currentScene
+    property Scene activeScene
     property string domain
     property string name
     property string organization: name
