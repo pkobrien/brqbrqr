@@ -10,18 +10,15 @@ Brq.Level {
     }
 
     Component.onCompleted: {
-        level.init();
         var brickWidth = 40;
-        var brickHeight = 20
+        var brickHeight = 20;
         for (var i = 0; i <= 600 - brickWidth; i += brickWidth) {
             for (var j = 100; j <= 300 - brickHeight; j += brickHeight * 3) {
                 var props = {"x": i, "y": j, "width": brickWidth, "height": brickHeight}
                 var brick = level.brickComponent.createObject(level, props);
                 brick.color = "Yellow";
                 brick.strength = 2;
-                level.register(brick);
             }
         }
-        level.completed();
     }
 }

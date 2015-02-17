@@ -2,7 +2,7 @@ import QtQuick 2.4
 import Box2D 2.0 as B2
 import "../gameframe" as GF
 
-GF.StaticBody {
+GF.KinematicBody {
     id: brick
 
     property bool broken: strength <= 0 ? true : false
@@ -21,7 +21,8 @@ GF.StaticBody {
         density: 1
         friction: 0
         onEndContact: {
-            if (other.getBody().target.objectName === "ball") {
+            var name = other.getBody().target.objectName;
+            if (name === "ball" || name === "SystemBall") {
                 brick.strength--;
                 visual.border.width++;
             }

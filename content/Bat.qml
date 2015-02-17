@@ -5,18 +5,23 @@ import "../gameframe" as GF
 GF.KinematicBody {
     id: bat
 
+    property real friction: 0
     property real _minX: 0
     property real _maxX: parent.width - bat.width
-    property real _prevY: 0
+    property real _initY: -1
 
     function bump() {
-        _prevY = bat.y
-        bat.linearVelocity = Qt.point(0, -2);
+        console.log("bump:", y, _initY)
+        if (y !== _initY) {
+            return;
+        }
+        bat.linearVelocity.y = -2;
     }
 
     function hit(ball, impulse) {
-        var location = ball.worldCenter;  //ball.getWorldCenter();
-        ball.applyLinearImpulse(impulse, location);
+//        ball.linearVelocity.y = -Math.max(ball.linearVelocity.y, ball.minLinearVelocityY)
+//        var location = ball.worldCenter;  //ball.getWorldCenter();
+//        ball.applyLinearImpulse(impulse, location);
     }
 
     function position(newX) {
@@ -32,9 +37,13 @@ GF.KinematicBody {
     height: 20
 
     onYChanged: {
-        if (y < _prevY - height / 2) {
-            linearVelocity = Qt.point(0, 0);
-            y = _prevY;
+        if (_initY < 0) {
+            _initY = y;
+            return;
+        }
+        if (y < _initY - height / 2) {
+            y = _initY;
+            linearVelocity.y = 0;
         }
     }
 
@@ -43,21 +52,15 @@ GF.KinematicBody {
             id: leftCircle
             radius: bat.height / 2
             x: 0
-            friction: 0.8
+            friction: bat.friction
             restitution: 1
             onBeginContact: {
-                if (other.getBody().target.objectName === "ball") {
-                    visualLeftCircle.border.width += 3;
-                    visualLeftCircle.border.color = "Red";
-                }
+                visualLeftCircle.border.width += 3;
             }
             onEndContact: {
-                if (other.getBody().target.objectName === "ball") {
-                    visualLeftCircle.border.color = "Yellow";
-                    visualLeftCircle.border.width -= 3;
-                    var impulse = Qt.point(-0.1, -0.5);
-                    bat.hit(other.getBody().target, impulse);
-                }
+                visualLeftCircle.border.width -= 3;
+                var impulse = Qt.point(-0.1, -0.5);
+                bat.hit(other.getBody().target, impulse);
             }
         },
         B2.Box {
@@ -66,42 +69,30 @@ GF.KinematicBody {
             height: bat.height * 0.75
             x: leftCircle.radius
             y: bat.height * 0.25
-            friction: 0.8
+            friction: bat.friction
             restitution: 1
             onBeginContact: {
-                if (other.getBody().target.objectName === "ball") {
-                    visualBox.border.width += 3;
-                    visualBox.border.color = "Red";
-                }
+                visualBox.border.width += 3;
             }
             onEndContact: {
-                if (other.getBody().target.objectName === "ball") {
-                    visualBox.border.color = "Yellow";
-                    visualBox.border.width -= 3;
-                    var impulse = Qt.point(0, -0.1);
-                    bat.hit(other.getBody().target, impulse);
-                }
+                visualBox.border.width -= 3;
+                var impulse = Qt.point(0, -0.1);
+                bat.hit(other.getBody().target, impulse);
             }
         },
         B2.Circle {
             id: rightCircle
             radius: bat.height / 2
             x: leftCircle.radius + box.width - rightCircle.radius
-            friction: 0.8
+            friction: bat.friction
             restitution: 1
             onBeginContact: {
-                if (other.getBody().target.objectName === "ball") {
-                    visualRightCircle.border.width += 3;
-                    visualRightCircle.border.color = "Red";
-                }
+                visualRightCircle.border.width += 3;
             }
             onEndContact: {
-                if (other.getBody().target.objectName === "ball") {
-                    visualRightCircle.border.color = "Yellow";
-                    visualRightCircle.border.width -= 3;
-                    var impulse = Qt.point(0.1, -0.5);
-                    bat.hit(other.getBody().target, impulse);
-                }
+                visualRightCircle.border.width -= 3;
+                var impulse = Qt.point(0.1, -0.5);
+                bat.hit(other.getBody().target, impulse);
             }
         }
     ]

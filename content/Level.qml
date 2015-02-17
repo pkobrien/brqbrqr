@@ -5,35 +5,29 @@ Item {
 
     property alias background: background
     property int bonusBalls: 1
-    property Component brickComponent
+    property Component brickComponent: Qt.createComponent("../content/Brick.qml")
     property int brickCount: 0
-    property var world: parent.world
+    property var world
 
-    function init() {
-        level.brickComponent = Qt.createComponent("../content/Brick.qml");
+    function onLoaded() {
+        level.world = parent.world;
+        var count = 0;
+        for (var i = 0; i < level.children.length; i++) {
+            var child = level.children[i];
+            if (child.objectName === "brick") {
+                registerBrick(child);
+                count++;
+            }
+        }
+        level.brickCount = count;
     }
 
-    function completed() {
-        level._countBricks();
-    }
-
-    function register(brick) {
+    function registerBrick(brick) {
         brick.onBrokenChanged.connect(level._brickBroke);
     }
 
     function _brickBroke() {
         level.brickCount--;
-    }
-
-    function _countBricks() {
-        var count = 0;
-        for (var i = 0; i < level.children.length; i++) {
-            var child = level.children[i];
-            if (child.objectName === "brick") {
-                count++;
-            }
-        }
-        level.brickCount = count;
     }
 
     width: 600
