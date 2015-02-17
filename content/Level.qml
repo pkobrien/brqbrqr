@@ -9,18 +9,7 @@ Item {
     property int brickCount: 0
     property var world
 
-    function onLoaded() {
-        level.world = parent.world;
-        var count = 0;
-        for (var i = 0; i < level.children.length; i++) {
-            var child = level.children[i];
-            if (child.objectName === "brick") {
-                registerBrick(child);
-                count++;
-            }
-        }
-        level.brickCount = count;
-    }
+    signal loaded()
 
     function registerBrick(brick) {
         brick.onBrokenChanged.connect(level._brickBroke);
@@ -32,6 +21,19 @@ Item {
 
     width: 600
     height: 400
+
+    onLoaded: {
+        level.world = parent.world;
+        var count = 0;
+        for (var i = 0; i < level.children.length; i++) {
+            var child = level.children[i];
+            if (child.objectName === "brick") {
+                registerBrick(child);
+                count++;
+            }
+        }
+        level.brickCount = count;
+    }
 
     Rectangle {
         id: background

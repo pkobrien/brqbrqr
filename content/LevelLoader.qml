@@ -9,16 +9,24 @@ Loader {
     property var world: parent.world
 
     function next() {
-        world.running = false;
-        index = (index + 1) % levels.length;
-        source = path;
-        world.running = true;
+        _load(index + 1);
     }
 
     function onBrickCountChanged() {
         if (item.brickCount === 0) {
             next();
         }
+    }
+
+    function previous() {
+        _load(index - 1);
+    }
+
+    function _load(level) {
+        world.running = false;
+        level = Math.min(Math.max(level, 0), levels.length - 1);
+        index = level % levels.length;
+        source = path;
     }
 
     width: 600
@@ -29,7 +37,7 @@ Loader {
         item.background.height = Qt.binding(function() { return parent.height; });
         item.background.visible = Qt.binding(function() { return !world.debug; });;
         item.background.z = -1;
-        item.onLoaded();
+        item.loaded();
         item.onBrickCountChanged.connect(onBrickCountChanged);
         parent.ballCount += item.bonusBalls;
     }

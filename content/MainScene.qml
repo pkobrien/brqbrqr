@@ -43,8 +43,25 @@ GF.Scene {
         scene.ballCount--;
     }
 
-//    function reset() {
-//    }
+    function nextLevel() {
+        scene.reset();
+        levelLoader.next();
+        scene.start();
+    }
+
+    function previousLevel() {
+        scene.reset();
+        levelLoader.previous();
+        scene.start();
+    }
+
+    function reset() {
+        if (scene.activeBall) {
+            scene.activeBall.destroy();
+            scene.activeBall = null;
+            scene.ballCount++;
+        }
+    }
 
     function start() {
         scene.loadBall();
@@ -54,9 +71,9 @@ GF.Scene {
     width: 600
     height: 500
 
-    status: qsTr("Balls: %1  Bricks: %2  [Debug: %4]  [Paused: %5]  [Gravity: %6]  [Y Velocity: %7]").arg(
+    status: qsTr("Balls: %1  Bricks: %2  [Debug: %4]  [Paused: %5]  [Gravity: %6]").arg(
                 ballCount).arg(levelLoader.item.brickCount).arg(world.debug).arg(!world.running).arg(
-                world.gravity).arg(activeBall.linearVelocity.y)
+                world.gravity)
 
     world: Brq.MainWorld { gravity: scene.gravity }
 
@@ -93,6 +110,7 @@ GF.Scene {
 
     Keys.onEnterPressed: world.running = !world.running;
     Keys.onEscapePressed: world.debug = !world.debug;
-    Keys.onRightPressed: levelLoader.next();
+    Keys.onLeftPressed: previousLevel();
+    Keys.onRightPressed: nextLevel();
     Keys.onSpacePressed: bat.bump();
 }
