@@ -68,6 +68,10 @@ GF.Scene {
         scene.world.running = true;
     }
 
+    function stop() {
+        scene.world.running = false;
+    }
+
     width: 600
     height: 500
 
@@ -106,11 +110,12 @@ GF.Scene {
         onPositionChanged: bat.synch(mouse);
     }
 
-    Component.onCompleted: start();
+//    Component.onCompleted: start();
 
     Keys.onEnterPressed: world.running = !world.running;
     Keys.onEscapePressed: world.debug = !world.debug;
     Keys.onLeftPressed: previousLevel();
+    Keys.onReturnPressed: finished();
     Keys.onRightPressed: nextLevel();
     Keys.onSpacePressed: bat.bump();
 }

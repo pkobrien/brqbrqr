@@ -7,10 +7,17 @@ Item {
 
     property string status
     property var world
+    property var _debugDraw
 
-    focus: true
+    signal finished()
 
-    GF.DebugDraw {
-        id: debugDraw
+    focus: visible
+    visible: false
+
+    Component.onCompleted: {
+        if (world) {
+            var comp = Qt.createComponent("DebugDraw.qml");
+            _debugDraw = comp.createObject(scene);
+        }
     }
 }

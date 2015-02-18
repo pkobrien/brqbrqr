@@ -14,6 +14,13 @@ GF.Scene {
     Text {
         color: "White"
         anchors.centerIn: parent
-        text: "Game Over!"
+        text: "Game Over! Click anywhere to quit."
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            scene.finished();
+        }
     }
 }

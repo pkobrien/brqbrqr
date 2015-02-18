@@ -6,8 +6,6 @@ GF.Scene {
 
     anchors.fill: parent
 
-    signal nextScene()
-
     Rectangle {
         color: "Black"
         anchors.fill: parent
@@ -22,7 +20,7 @@ GF.Scene {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            nextScene();
+            scene.finished();
         }
     }
 }
