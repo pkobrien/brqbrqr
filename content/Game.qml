@@ -1,6 +1,6 @@
 import QtQuick 2.4
 import QtQml.StateMachine 1.0 as DSM
-import "../gameframe" as GF
+import GameFrame 1.0 as GF
 import "../scenes" as Scene
 
 GF.Game {

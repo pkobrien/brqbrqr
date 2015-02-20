@@ -33,6 +33,7 @@ Loader {
 
     width: 600
     height: 400
+
     onLoaded: {
         item.background.parent = Qt.binding(function() { return parent; });
         item.background.width = Qt.binding(function() { return parent.width; });

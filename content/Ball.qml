@@ -1,6 +1,6 @@
 import QtQuick 2.4
 import Box2D 2.0 as B2
-import "../gameframe" as GF
+import GameFrame 1.0 as GF
 
 GF.DynamicBody {
     id: ball

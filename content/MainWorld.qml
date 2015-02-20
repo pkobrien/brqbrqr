@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import "../gameframe" as GF
+import GameFrame 1.0 as GF
 
 GF.World {
     id: world

@@ -3,7 +3,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.2
 import "../content" as Brq
-import "../gameframe" as GF
+import GameFrame 1.0 as GF
 
 GF.ApplicationWindow {
     id: applicationWindow

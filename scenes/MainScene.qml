@@ -1,6 +1,6 @@
 import QtQuick 2.4
 import "../content" as Brq
-import "../gameframe" as GF
+import GameFrame 1.0 as GF
 
 GF.Scene {
     id: scene
@@ -72,14 +72,6 @@ GF.Scene {
         scene.world.running = false;
     }
 
-    onEntered: {
-        start();
-    }
-
-    onExited: {
-        stop();
-    }
-
     width: 600
     height: 500
 
@@ -88,6 +80,14 @@ GF.Scene {
                 world.debug).arg(!world.running).arg(world.gravity)
 
     world: Brq.MainWorld { gravity: scene.gravity }
+
+    onEntered: {
+        start();
+    }
+
+    onExited: {
+        stop();
+    }
 
     Brq.Bat {
         id: bat
@@ -117,8 +117,6 @@ GF.Scene {
         onClicked: launchBall();
         onPositionChanged: bat.synch(mouse);
     }
-
-//    Component.onCompleted: start();
 
     Keys.onEnterPressed: world.running = !world.running;
     Keys.onEscapePressed: world.debug = !world.debug;
