@@ -9,11 +9,12 @@ GF.Game {
     width: 600
     height: 500
 
-//    activeScene: mainScene
+    domain: "com.brqbrqr"
     name: "BrqBrqr"
-    status: activeScene ? activeScene.status : ""
+    organization: name
+    version: "0.1.0"
 
-    //    updatesPerSecond: 30
+    status: activeScene ? activeScene.status : ""
 
     Scene.GameIntro {
         id: gameIntroScene
@@ -29,6 +30,7 @@ GF.Game {
 
     DSM.StateMachine {
         id: stateMachine
+
         initialState: omniState
         running: true
 
@@ -36,12 +38,11 @@ GF.Game {
             id: omniState
 
             initialState: welcomeState
+
 //            DSM.SignalTransition {
-//                targetState: finalState
 //                signal: quitButton.clicked
+//                targetState: finalState
 //            }
-            onEntered: console.log("omniState entered");
-            onExited: console.log("omniState exited");
 
             DSM.State {
                 id: welcomeState
@@ -49,18 +50,8 @@ GF.Game {
                 DSM.SignalTransition {
                     signal: gameIntroScene.finished
                     targetState: mainState
-                    onTriggered: console.log("gameIntroScene.finished");
                 }
-                onEntered: {
-                    console.log("welcomeState entered");
-                    game.activeScene = gameIntroScene;
-                    gameIntroScene.visible = true;
-                }
-                onExited: {
-                    console.log("welcomeState exited");
-                    game.activeScene = null;
-                    gameIntroScene.visible = false;
-                }
+                onEntered: game.activate(gameIntroScene);
             }
 
             DSM.State {
@@ -69,20 +60,8 @@ GF.Game {
                 DSM.SignalTransition {
                     signal: mainScene.finished
                     targetState: goodbyeState
-                    onTriggered: console.log("mainScene.finished");
                 }
-                onEntered: {
-                    console.log("mainState entered");
-                    game.activeScene = mainScene;
-                    mainScene.visible = true;
-                    mainScene.start();
-                }
-                onExited: {
-                    console.log("mainState exited");
-                    game.activeScene = null;
-                    mainScene.stop();
-                    mainScene.visible = false;
-                }
+                onEntered: game.activate(mainScene);
             }
 
             DSM.State {
@@ -91,26 +70,13 @@ GF.Game {
                 DSM.SignalTransition {
                     signal: gameOverScene.finished
                     targetState: finalState
-                    onTriggered: console.log("gameOverScene.finished");
                 }
-                onEntered: {
-                    console.log("goodbyeState entered");
-                    game.activeScene = gameOverScene;
-                    gameOverScene.visible = true;
-                }
-                onExited: {
-                    console.log("goodbyeState exited");
-                    game.activeScene = null;
-                    gameOverScene.visible = false;
-                }
+                onEntered: game.activate(gameOverScene);
             }
         }
 
         DSM.FinalState {
             id: finalState
-
-            onEntered: console.log("finalState entered");
-            onExited: console.log("finalState exited");
         }
         onFinished: Qt.quit();
     }

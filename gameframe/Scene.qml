@@ -5,14 +5,25 @@ import "." as GF
 Item {
     id: scene
 
+    property bool active: false
     property string status
     property var world
     property var _debugDraw
 
+    signal entered()
+    signal exited()
     signal finished()
 
     focus: visible
-    visible: false
+    visible: active
+
+    onActiveChanged: {
+        if (active) {
+            entered();
+        } else {
+            exited();
+        }
+    }
 
     Component.onCompleted: {
         if (world) {

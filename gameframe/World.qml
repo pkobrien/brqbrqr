@@ -13,4 +13,6 @@ B2.World {
     onPreSolve: { }
 
     onPostSolve: { }
+
+    onStepped: { }
 }

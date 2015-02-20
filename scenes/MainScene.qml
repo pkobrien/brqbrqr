@@ -72,6 +72,14 @@ GF.Scene {
         scene.world.running = false;
     }
 
+    onEntered: {
+        start();
+    }
+
+    onExited: {
+        stop();
+    }
+
     width: 600
     height: 500
 
