@@ -14,7 +14,7 @@ GF.Game {
     organization: name
     version: "0.1.0"
 
-    status: activeScene ? activeScene.status : ""
+    statusText: activeScene ? activeScene.statusText : ""
 
     Scene.GameIntro {
         id: gameIntroScene

@@ -75,9 +75,9 @@ GF.Scene {
     width: 600
     height: 500
 
-    status: qsTr("Level: %1  Balls: %2  Bricks: %3  [Debug: %4]  [Paused: %5]  [Gravity: %6]").arg(
-                levelLoader.levelName).arg(ballCount).arg(levelLoader.item.brickCount).arg(
-                world.debug).arg(!world.running).arg(world.gravity)
+    statusText: qsTr("Level: %1  Balls: %2  Bricks: %3  [Debug: %4]  [Paused: %5]  [Gravity: %6]").arg(
+                    levelLoader.levelName).arg(ballCount).arg(levelLoader.item.brickCount).arg(
+                    world.debug).arg(!world.running).arg(world.gravity)
 
     world: Brq.MainWorld { gravity: scene.gravity }
 

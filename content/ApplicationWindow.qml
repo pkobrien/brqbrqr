@@ -6,7 +6,7 @@ import "../content" as Brq
 import GameFrame 1.0 as GF
 
 GF.ApplicationWindow {
-    id: applicationWindow
+    id: appWindow
 
     width: game.width
     height: game.height + statusBar.height
@@ -27,7 +27,7 @@ GF.ApplicationWindow {
         width: game.width
         RowLayout {
             anchors.fill: parent
-            Label { text: game.status }
+            Label { text: game.statusText }
         }
     }
 }
