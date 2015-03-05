@@ -77,7 +77,7 @@ GF.Scene {
 
     statusText: qsTr("Level: %1  Balls: %2  Bricks: %3  [Debug: %4]  [Paused: %5]  [Gravity: %6]").arg(
                     levelLoader.levelName).arg(ballCount).arg(levelLoader.item.brickCount).arg(
-                    world.debug).arg(!world.running).arg(world.gravity)
+                    scene.debug).arg(!world.running).arg(world.gravity)
 
     world: Brq.MainWorld { gravity: scene.gravity }
 
@@ -119,7 +119,7 @@ GF.Scene {
     }
 
     Keys.onEnterPressed: world.running = !world.running;
-    Keys.onEscapePressed: world.debug = !world.debug;
+    Keys.onEscapePressed: scene.debug = !scene.debug;
     Keys.onLeftPressed: previousLevel();
     Keys.onReturnPressed: finished();
     Keys.onRightPressed: nextLevel();

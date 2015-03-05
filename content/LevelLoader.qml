@@ -38,7 +38,7 @@ Loader {
         item.background.parent = Qt.binding(function() { return parent; });
         item.background.width = Qt.binding(function() { return parent.width; });
         item.background.height = Qt.binding(function() { return parent.height; });
-        item.background.visible = Qt.binding(function() { return !world.debug; });;
+        item.background.visible = Qt.binding(function() { return !parent.debug; });;
         item.background.z = -1;
         item.loaded();
         item.onBrickCountChanged.connect(onBrickCountChanged);
